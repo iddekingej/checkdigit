@@ -1,12 +1,28 @@
-<?
+<?php
 namespace checkdigit;
 
+/**
+*Check isbn number
+*/
 class ISBN
 {
+
+/**
+*Strip "-" from isbn number
+*@param $p_isbn isbn number
+*@return  isbn number without '-'
+*/
+
 	static private function strip($p_isbn)
 	{
 		return str_replace("-","",$p_isbn);
 	}
+	
+/**
+* Calculate check digit from old type (10 based) isbn number
+* @param $p_isbn  Isbn number used for calculation
+* @return check digit
+*/
 	static private function calc10($p_isbn)
 	{		
 		$l_isbn="$p_isbn";				
@@ -23,6 +39,11 @@ class ISBN
 		return $l_chk %11;
 	}
 	
+/**
+*Calculate check digit from old type (13 based) isbn number
+*@param $p_isbn isbn number used for calculation
+*@return check digit
+*/
 	static private function calc13($p_isbn)
 	{
 		$l_isbn="$p_isbn";
@@ -40,6 +61,11 @@ class ISBN
 		return $l_chk % 10;
 	}
 	
+/**
+*Checks is isbn number is correct
+*\param p_isbn isbn number
+*\return true number is not correct
+*/
 	
 	static public function check($p_isbn)
 	{
@@ -65,6 +91,12 @@ class ISBN
 		}
 	}
 	
+/**
+*Calculates full isbn number. 'base number' + check digit
+*@param isbn number without check digit
+*@return isbn number + check digit, or null when isbn number doesn't contain 9 or 12 digit
+*        that is the isbn number without the '-' stripped)
+*/
 	static public function calculate($p_isbn)
 	{
 		$l_isbn=self::strip($p_isbn);
